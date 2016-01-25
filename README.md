@@ -11,6 +11,12 @@ This package uses Cordova plugin (https://github.com/xu-li/cordova-plugin-wechat
 
 AppId needs to be set in the mobile.config
 
+```
+App.configurePlugin('cordova-plugin-wechat', {
+    WECHATAPPID: '<WECHATAPPID>'
+});
+```
+
 License
 -----------
 [MIT](https://github.com/boxfish/meteor-wechat/blob/master/LICENSE)
