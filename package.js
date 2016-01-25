@@ -1,7 +1,7 @@
 Package.describe({
   name: "boxfish:wechat",
   summary: "WeChat OAuth flow",
-  version: "0.8.2",
+  version: "0.8.11",
   git: "https://github.com/boxfish/meteor-wechat.git"
 });
 
@@ -10,8 +10,8 @@ Package.onUse(function(api) {
   api.use('oauth2', ['client', 'server']);
   api.use('oauth', ['client', 'server']);
   api.use('http', ['server']);
-  api.use(['underscore', 'service-configuration'], ['client', 'server']);
-  api.use(['random', 'templating'], 'client');
+  api.use(['underscore', 'random', 'service-configuration'], ['client', 'server']);
+  api.use(['templating'], 'client');
 
   api.export('MeteorWeChat');
 

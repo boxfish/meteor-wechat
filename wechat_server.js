@@ -21,7 +21,8 @@ var serviceHandler = function(query) {
     expiresAt: expiresAt,
     openId: openId,
     unionId: unionId,
-    scope: scope
+    scope: scope,
+    id: openId  // must specify id
   };
 
   // only set the token in serviceData if it's there. this ensures
@@ -78,15 +79,23 @@ var getTokenResponse = function (query) {
     expiresIn: response.content.expires_in,
     refreshToken: response.content.refresh_token,
     openId: response.content.openid,
-    scope: response.content,scope,
+    scope: response.content.scope,
     unionId: response.content.unionid
   };
 };
 
 var getIdentity = function (accessToken, openId) {
   try {
-    return HTTP.get("api.weixin.qq.com/sns/userinfo", {
-      params: {access_token: accessToken, openid: openId, lang: 'en'}}).data;
+    var response = HTTP.get("https://api.weixin.qq.com/sns/userinfo", {
+      params: {access_token: accessToken, openid: openId, lang: 'en'}}
+    );
+    console.log('step 3 - get user profile: ', response);
+    if (response.error) // if the http response was an error
+        throw response.error;
+    if (typeof response.content === "string")
+        return JSON.parse(response.content);
+    if (response.content.error)
+        throw response.content;
   } catch (err) {
     throw _.extend(new Error("Failed to fetch identity from WeChat. " + err.message),
       {response: err.response});
@@ -110,7 +119,8 @@ Meteor.methods({
     var oauthResult = serviceHandler(query);
     var credentialSecret = Random.secret();
 
-    var credentialToken = OAuth._credentialTokenFromQuery(query);
+    //var credentialToken = OAuth._credentialTokenFromQuery(query);
+    var credentialToken = query.state;
     // Store the login result so it can be retrieved in another
     // browser tab by the result handler
     OAuth._storePendingCredential(credentialToken, {

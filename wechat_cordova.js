@@ -17,7 +17,7 @@ MeteorWeChat.requestCredential = function (options, credentialRequestCompleteCal
   var config = ServiceConfiguration.configurations.findOne({service: 'wechat'});
   if (!config) {
     credentialRequestCompleteCallback && credentialRequestCompleteCallback(
-      new ServiceConfiguration.ConfigError();
+      new ServiceConfiguration.ConfigError()
     );
     return;
   }
@@ -26,11 +26,12 @@ MeteorWeChat.requestCredential = function (options, credentialRequestCompleteCal
   var scope = (options && options.requestPermissions) || ['snsapi_userinfo'];
   scope = _.map(scope, encodeURIComponent).join(',');
   var loginStyle = OAuth._loginStyle('wechat', config, options);
-  var state = OAuth._stateParam(loginStyle, credentialToken);
+  //var state = OAuth._stateParam(loginStyle, credentialToken);
+  var state = credentialToken;
 
   if (!Wechat) {
     credentialRequestCompleteCallback && credentialRequestCompleteCallback(
-      new Meteor.Error("unsupported", "WeChat corodova plugin is not found.");
+      new Meteor.Error("unsupported", "WeChat corodova plugin is not found.")
     );
     return;
   }
@@ -38,7 +39,7 @@ MeteorWeChat.requestCredential = function (options, credentialRequestCompleteCal
   Wechat.isInstalled(function (installed) {
     if (!installed) {
       credentialRequestCompleteCallback && credentialRequestCompleteCallback(
-        new Meteor.Error("unsupported", "WeChat is not installed.");
+        new Meteor.Error("unsupported", "WeChat is not installed.")
       );
       return;
     }
@@ -53,12 +54,12 @@ MeteorWeChat.requestCredential = function (options, credentialRequestCompleteCal
       });
     }, function(reason) {
       credentialRequestCompleteCallback && credentialRequestCompleteCallback(
-        new Meteor.Error("unauthroized", "WeChat authorization failed: " + reason);
+        new Meteor.Error("unauthroized", "WeChat authorization failed: " + reason)
       );
     });
   }, function (reason) {
     credentialRequestCompleteCallback && credentialRequestCompleteCallback(
-      new Meteor.Error("unsupported", "Cannot detect whether WeChat is installed or not: " + reason);
+      new Meteor.Error("unsupported", "Cannot detect whether WeChat is installed or not: " + reason)
     );
     return;
   });

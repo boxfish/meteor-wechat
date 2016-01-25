@@ -17,7 +17,7 @@ MeteorWeChat.requestCredential = function (options, credentialRequestCompleteCal
   var config = ServiceConfiguration.configurations.findOne({service: 'wechat'});
   if (!config) {
     credentialRequestCompleteCallback && credentialRequestCompleteCallback(
-      new ServiceConfiguration.ConfigError();
+      new ServiceConfiguration.ConfigError()
     );
     return;
   }
