@@ -1,7 +1,7 @@
 Package.describe({
   name: "boxfish:wechat",
   summary: "WeChat OAuth flow",
-  version: "0.8.0",
+  version: "0.8.1",
   git: "https://github.com/boxfish/meteor-wechat.git"
 });
 

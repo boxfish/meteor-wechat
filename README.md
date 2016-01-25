@@ -3,7 +3,7 @@ A OAuth2 wrapper for the WeChat API
 
 ## Installation
 ```
-meteor add worldelites:meteor-wechat
+meteor add boxfish:meteor-wechat
 ```
 
 ## Cordova Integration
@@ -13,8 +13,8 @@ AppId needs to be set in the mobile.config
 
 License
 -----------
-[MIT](https://github.com/worldelites/meteor-wechat/blob/master/LICENSE)
+[MIT](https://github.com/boxfish/meteor-wechat/blob/master/LICENSE)
 
 Contributors
 -----------
-See [current package contributors](https://github.com/worldelites/meteor-wechat/graphs/contributors)
+See [current package contributors](https://github.com/boxfish/meteor-wechat/graphs/contributors)
