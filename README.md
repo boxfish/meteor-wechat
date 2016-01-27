@@ -7,7 +7,7 @@ meteor add boxfish:meteor-wechat
 ```
 
 ## Cordova Integration
-This package uses Cordova plugin (https://github.com/xu-li/cordova-plugin-wechat) on mobile devices, with browser fallback if the user is using web browser or without WeChat installed.
+This package uses Cordova plugin (https://github.com/xu-li/cordova-plugin-wechat) on mobile devices to fetch the authorization code.
 
 AppId needs to be set in the mobile.config
 

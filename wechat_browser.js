@@ -44,3 +44,8 @@ MeteorWeChat.requestCredential = function (options, credentialRequestCompleteCal
     credentialToken: credentialToken
   });
 };
+
+MeteorWeChat.appInstalled = function(callback) {
+  // for browser, it's always false
+  callback && callback(null, false);
+};

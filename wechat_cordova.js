@@ -45,7 +45,7 @@ MeteorWeChat.requestCredential = function (options, credentialRequestCompleteCal
     }
 
     Wechat.auth(scope, state, function(response) {
-      // send the response to the server for processing
+      // send the 3rd party response directly to the server for processing
       Meteor.call('handleWeChatOauthRequest', response, function(err, credentials) {
         OAuth._handleCredentialSecret(credentials.credentialToken, credentials.credentialSecret);
         credentialRequestCompleteCallback && credentialRequestCompleteCallback(
@@ -62,5 +62,22 @@ MeteorWeChat.requestCredential = function (options, credentialRequestCompleteCal
       new Meteor.Error("unsupported", "Cannot detect whether WeChat is installed or not: " + reason)
     );
     return;
+  });
+};
+
+MeteorWeChat.appInstalled = function(callback) {
+  if (!Wechat) {
+    callback && callback(
+      new Meteor.Error("unsupported", "WeChat corodova plugin is not found.")
+    );
+    return;
+  }
+
+  Wechat.isInstalled(function (installed) {
+    callback && callback(null, installed);
+  }, function(reason) {
+    callback && callback(
+      new Meteor.Error("unsupported", "Cannot detect whether WeChat is installed or not: " + reason)
+    );
   });
 };

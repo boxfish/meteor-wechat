@@ -22,7 +22,7 @@ var serviceHandler = function(query) {
     openId: openId,
     unionId: unionId,
     scope: scope,
-    id: openId  // must specify id
+    id: openId  // id is required by Meteor, using openId since it's not given by WeChat
   };
 
   // only set the token in serviceData if it's there. this ensures
@@ -61,7 +61,6 @@ var getTokenResponse = function (query) {
         }
       }
     );
-    console.log('step 2 - get access token response: ', response);
     if (response.error) // if the http response was an error
         throw response.error;
     if (typeof response.content === "string")
@@ -89,7 +88,6 @@ var getIdentity = function (accessToken, openId) {
     var response = HTTP.get("https://api.weixin.qq.com/sns/userinfo", {
       params: {access_token: accessToken, openid: openId, lang: 'en'}}
     );
-    console.log('step 3 - get user profile: ', response);
     if (response.error) // if the http response was an error
         throw response.error;
     if (typeof response.content === "string")
@@ -111,10 +109,9 @@ MeteorWeChat.retrieveCredential = function(credentialToken, credentialSecret) {
   return OAuth.retrieveCredential(credentialToken, credentialSecret);
 };
 
-// allow the client with request code to directly ask server to handle it
 Meteor.methods({
   handleWeChatOauthRequest: function(query) {
-    console.log('step 1 - get the query code: ', query);
+    // allow the client with 3rd party authorization code to directly ask server to handle it
     check(query.code, String);
     var oauthResult = serviceHandler(query);
     var credentialSecret = Random.secret();
